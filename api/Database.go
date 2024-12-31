@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 )
@@ -68,4 +69,19 @@ func CreatePool(UUID string) error {
         return err
     }
     return nil
+}
+
+
+func GetPool(UUID string) ([]byte, error) {
+    db := LoadJSON().Pools
+    for _, pool := range db {
+        if pool.Uid == UUID{
+            jsonPool, err := json.Marshal(pool)
+            if err != nil {
+                return []byte(""), fmt.Errorf("Error")
+            }
+            return jsonPool, nil
+        }
+    }
+    return []byte(""), fmt.Errorf("No such pool")
 }
