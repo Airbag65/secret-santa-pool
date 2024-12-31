@@ -52,7 +52,7 @@ func LoadJSON() *Database {
     return &db
 }
 
-func CreatePool(UUID string) {
+func CreatePool(UUID string) error {
     pool := &Pool{
         Uid: UUID,
         Members: []Person{},
@@ -60,6 +60,12 @@ func CreatePool(UUID string) {
     db := LoadJSON()
     db.Pools = append(db.Pools, *pool)
 
-    jsonString, _ := json.Marshal(db) 
-    os.WriteFile("./db.json", jsonString, os.ModePerm)
+    jsonString, err := json.Marshal(db) 
+    if err != nil {
+        return err
+    }
+    if err := os.WriteFile("./db.json", jsonString, os.ModePerm); err != nil {
+        return err
+    }
+    return nil
 }

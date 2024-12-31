@@ -31,8 +31,19 @@ func (h * createPoolHandler) ServeHTTP (w http.ResponseWriter, r *http.Request){
     responseObj := &createPoolResponse{
         Uuid: Uuid,
     }
-    res, _ := json.Marshal(responseObj)
-    CreatePool(Uuid)
+
+    res, err := json.Marshal(responseObj)
+    if err != nil {
+        w.WriteHeader(500)
+        w.Write([]byte("Something went wrong"))
+        return
+    }
+
+    if err := CreatePool(Uuid); err != nil {
+        w.WriteHeader(500)
+        w.Write([]byte("Something went wrong"))
+        return
+    }
     w.WriteHeader(200)
     w.Write(res)
 }
