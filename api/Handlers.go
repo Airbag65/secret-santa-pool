@@ -1,7 +1,15 @@
 package main
 
-import "net/http"
+import (
+	"encoding/json"
+	"net/http"
 
+	"github.com/google/uuid"
+)
+
+type createPoolResponse struct{
+    Uuid string `json:"uuid"`
+}
 
 type homeHandler struct{}
 
@@ -19,8 +27,14 @@ func (h * createPoolHandler) ServeHTTP (w http.ResponseWriter, r *http.Request){
         w.Write([]byte("Method Not Allowed"))
         return
     }
+    Uuid := uuid.New().String()
+    responseObj := &createPoolResponse{
+        Uuid: Uuid,
+    }
+    res, _ := json.Marshal(responseObj)
+    CreatePool(Uuid)
     w.WriteHeader(200)
-    w.Write([]byte("OK"))
+    w.Write(res)
 }
 
 
@@ -33,5 +47,5 @@ func (h * getPoolHandler) ServeHTTP (w http.ResponseWriter, r *http.Request) {
     }
     
     w.WriteHeader(200)
-    w.Write([]byte("OK"))
+    w.Write(TestJson())
 }

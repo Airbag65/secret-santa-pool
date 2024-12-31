@@ -8,10 +8,8 @@ func main(){
     mux := http.NewServeMux()
     
     mux.Handle("/", &homeHandler{})
-    mux.Handle("/create", &createPoolHandler{})
+    mux.Handle("/createpool", &createPoolHandler{})
     mux.Handle("/get", &getPoolHandler{})
 
     http.ListenAndServe(":8080", mux)
 }
-
-
