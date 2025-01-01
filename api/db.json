@@ -1,1 +1,14 @@
-{"pools":[{"uid":"eb2f08a5-12de-4253-9e14-cad1bf8f762e","members":[{"email":"normananton03@gmail.com","first_name":"Anton","last_name":"Norman"},{"email":"maria.norman@gmail.com","first_name":"Maria","last_name":"Norman"}]},{"uid":"5e7d1085-8db4-4333-a7b0-589bce2a0098","members":[{"email":"anders.bengtsson@gmail.com","first_name":"Bengt","last_name":"Andersson"}]}]}
+{
+	"pools": [
+		{
+			"uid": "301bdb90-f788-4577-9bae-0fac4f041699",
+			"members": [
+				{
+					"email": "normananton03@gmail.com",
+					"first_name": "Anton",
+					"last_name": "Norman"
+				}
+			]
+		}
+	]
+}
