@@ -10,6 +10,7 @@ func main(){
     mux.Handle("/", &homeHandler{})
     mux.Handle("/createpool", &createPoolHandler{})
     mux.Handle("/get", &getPoolHandler{})
+    mux.Handle("/addmember", &addPersonHandler{})
 
     http.ListenAndServe(":8080", mux)
 }
