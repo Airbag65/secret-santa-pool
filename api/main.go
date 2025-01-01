@@ -2,15 +2,22 @@ package main
 
 import (
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 func main(){
     mux := http.NewServeMux()
     
-    mux.Handle("/", &homeHandler{})
+    mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+        w.WriteHeader(200)
+        w.Write([]byte("OK"))
+    })
     mux.Handle("/createpool", &createPoolHandler{})
     mux.Handle("/get", &getPoolHandler{})
     mux.Handle("/addmember", &addPersonHandler{})
 
-    http.ListenAndServe(":8080", mux)
+    handler := cors.Default().Handler(mux)
+
+    http.ListenAndServe(":8080", handler)
 }

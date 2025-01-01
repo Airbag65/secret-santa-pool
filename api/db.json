@@ -1,14 +1,8 @@
 {
 	"pools": [
 		{
-			"uid": "301bdb90-f788-4577-9bae-0fac4f041699",
-			"members": [
-				{
-					"email": "normananton03@gmail.com",
-					"first_name": "Anton",
-					"last_name": "Norman"
-				}
-			]
+			"uid": "bac20de4-5905-4d97-beba-51490d5afdc8",
+			"members": []
 		}
 	]
 }

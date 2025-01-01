@@ -91,9 +91,7 @@ func InsertMember(NewMember *addMemberRequest) error {
     db := LoadJSON()
     for i, pool := range db.Pools {
         if pool.Uid == NewMember.Uid{
-            // pool.Members = append(pool.Members, NewMember.Person)
             db.Pools[i].Members = append(db.Pools[i].Members, NewMember.Person)
-            fmt.Printf("%+v", db)
             jsonString, err := json.MarshalIndent(db, "", "\t")
             if err != nil {
                 return fmt.Errorf("Something went wrong")
