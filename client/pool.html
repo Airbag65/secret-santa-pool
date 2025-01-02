@@ -7,5 +7,20 @@
     </head>
     <body>
         <h1>POOL</h1>
+        <h3>Members in this pool</h3>
+        <ul id="memberList">
+            
+        </ul>
+        <p>Can't find your name? Enter the pool!</p>
+        <form method="post" onsubmit="addMember()">
+            <input type="text" name="first_name" id="first_name" placeholder="First name">
+            <input type="text" name="last_name" id="last_name" placeholder="Last name">
+            <input type="email" name="email" id="email" placeholder="Email">
+            <input type="submit" name="" value="Enter pool">
+        </form>
+        <div id="admin">
+            
+        </div>
+        <script src="pool.js"></script>
     </body>
 </html>
