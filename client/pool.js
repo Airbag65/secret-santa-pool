@@ -8,7 +8,6 @@ paramsList.forEach(element => {
     let param = element.split('=');
     params[param[0]] = param[1] 
 });
-// console.log(params)
 
 const addMember = async () => {
     const fn = document.getElementById("first_name")
@@ -31,19 +30,21 @@ const addMember = async () => {
             body: JSON.stringify(reqObj)
         })
     } catch {}
-    // console.log(reqObj)
 } 
 
 const getPool = async () => {
     if (params.admin == 'true'){
-        admin.innerHTML += "does this work?"
+        admin.innerHTML += "<button type='button' onclick='doLottery()'>Perform Lottery</button>"
     }
     const res = await fetch(`http://127.0.0.1:8080/get?uid=${params.uid}`)
     let pool = await res.json().then(element => {return element})
-    // console.log(pool.members)
     pool.members.forEach(element => {
         memberList.innerHTML += `<p>${element.first_name} ${element.last_name} | ${element.email}</p>`
     });
+}
+
+const doLottery = () => {
+    fetch(`http://127.0.0.1:8080/lottery?uid=${params.uid}`)
 }
 
 getPool()

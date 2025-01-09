@@ -22,6 +22,11 @@ type Person struct{
     LastName  string `json:"last_name"`
 }
 
+
+func (p *Person) toString() string {
+    return fmt.Sprintf("%s|%s|%s|", p.FirstName, p.LastName, p.Email)
+}
+
 func TestJson() []byte {
     person := &Person{
         Email: "normananton03@gmail.com",
@@ -71,6 +76,33 @@ func CreatePool(UUID string) error {
     return nil
 }
 
+func DeletePool(UUID string) error {
+    db := LoadJSON()
+    var index int
+    for i, pool := range db.Pools {
+        if pool.Uid == UUID{
+            index = i
+            break
+        }
+    }
+
+    fmt.Println(index)
+    if index == 0{
+        db.Pools = db.Pools[1:]
+    } else if index == len(db.Pools) - 1 {
+        db.Pools = db.Pools[:len(db.Pools) - 1]
+    } else {
+        db.Pools = append(db.Pools[:index], db.Pools[index + 1:]...)
+    }
+    jsonString, err := json.MarshalIndent(db, "", "\t")
+    if err != nil {
+        return err
+    }
+    if err := os.WriteFile("./db.json", jsonString, os.ModePerm); err != nil {
+        return err
+    }
+    return nil
+}
 
 func GetPool(UUID string) ([]byte, error) {
     db := LoadJSON().Pools
@@ -87,20 +119,20 @@ func GetPool(UUID string) ([]byte, error) {
 }
 
 
-func InsertMember(NewMember *addMemberRequest) error {
+func InsertMember(NewMember *addMemberRequest) (*Person, error) {
     db := LoadJSON()
     for i, pool := range db.Pools {
         if pool.Uid == NewMember.Uid{
             db.Pools[i].Members = append(db.Pools[i].Members, NewMember.Person)
             jsonString, err := json.MarshalIndent(db, "", "\t")
             if err != nil {
-                return fmt.Errorf("Something went wrong")
+                return nil, fmt.Errorf("Something went wrong")
             }
             if err := os.WriteFile("./db.json", jsonString, os.ModePerm); err != nil {
-                return err
+                return nil, err
             }
-            return nil
+            return &NewMember.Person, nil
         }
     }
-    return fmt.Errorf("Pool: %s does not exist", NewMember.Uid)
+    return nil, fmt.Errorf("Pool: %s does not exist", NewMember.Uid)
 }

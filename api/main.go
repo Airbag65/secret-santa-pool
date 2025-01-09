@@ -7,6 +7,7 @@ import (
 )
 
 func main(){
+    // SendEmailJoinePool()
     mux := http.NewServeMux()
     
     mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
@@ -16,6 +17,7 @@ func main(){
     mux.Handle("/createpool", &createPoolHandler{})
     mux.Handle("/get", &getPoolHandler{})
     mux.Handle("/addmember", &addPersonHandler{})
+    mux.Handle("/lottery", &performLotteryHandler{})
 
     handler := cors.Default().Handler(mux)
 
