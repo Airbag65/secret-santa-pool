@@ -86,7 +86,6 @@ func DeletePool(UUID string) error {
         }
     }
 
-    fmt.Println(index)
     if index == 0{
         db.Pools = db.Pools[1:]
     } else if index == len(db.Pools) - 1 {

@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
+    "log"
 	"net/http"
 	"net/smtp"
 	"os"
@@ -183,14 +183,19 @@ func (h *performLotteryHandler) ServeHTTP (w http.ResponseWriter, r *http.Reques
     var pool Pool
     json.Unmarshal(poolBytes, &pool)
 
-    // result := GenerateResult(pool.Members)
-    // err = SendEmailLottery(result)
-    // if err != nil {
-    //     w.WriteHeader(500)
-    //     w.Write([]byte("Internal server error"))
-    //     return
-    // }
-    DeletePool(params["uid"])
+    result := GenerateResult(pool.Members)
+    err = SendEmailLottery(result)
+    if err != nil {
+        w.WriteHeader(500)
+        w.Write([]byte("Internal server error"))
+        return
+    }
+    err = DeletePool(params["uid"])
+    if err != nil{
+        w.WriteHeader(500)
+        w.Write([]byte("Internal server error"))
+        return
+    }
 
     w.WriteHeader(200)
     w.Write([]byte("OK"))
@@ -218,9 +223,9 @@ func GenerateResult(list []Person) map[Person]Person {
             break
         }
     }
-    for key, value := range res{
-        fmt.Printf("%s   -   %s\n", key.toString(), value.toString())
-    }
+    // for key, value := range res{
+    //     fmt.Printf("%s   -   %s\n", key.toString(), value.toString())
+    // }
 
     return res
 }

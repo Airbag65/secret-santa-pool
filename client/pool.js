@@ -43,8 +43,9 @@ const getPool = async () => {
     });
 }
 
-const doLottery = () => {
-    fetch(`http://127.0.0.1:8080/lottery?uid=${params.uid}`)
+const doLottery = async () => {
+    await fetch(`http://127.0.0.1:8080/lottery?uid=${params.uid}`)
+    window.location.href = "./done.html"
 }
 
 getPool()
