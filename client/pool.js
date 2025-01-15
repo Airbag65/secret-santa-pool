@@ -31,10 +31,26 @@ const addMember = async () => {
         })
     } catch {}
 } 
+copyToClipboard = () => {
+  // Get the text field
+  // var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  // copyText.select();
+  // copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  // navigator.clipboard.writeText(copyText.value);
+    navigator.clipboard.writeText(window.location.href.substring(0, window.location.href.length - 11))
+
+  // Alert the copied text
+  alert("Copied URL to clipboard: ");
+} 
 
 const getPool = async () => {
     if (params.admin == 'true'){
-        admin.innerHTML += "<button type='button' onclick='doLottery()'>Perform Lottery</button>"
+        admin.innerHTML += `<code>${window.location.href.substring(0, window.location.href.length - 11)} </code><button type='button' onclick='copyToClipboard()'>Save to Clipboard</button>`
+        admin.innerHTML += "<br><button type='button' onclick='doLottery()'>Perform Lottery</button>"
     }
     const res = await fetch(`http://127.0.0.1:8080/get?uid=${params.uid}`)
     let pool = await res.json().then(element => {return element})
