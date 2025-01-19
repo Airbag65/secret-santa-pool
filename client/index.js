@@ -9,7 +9,7 @@ const createPool = async () => {
         }         
         const json = await res.json() 
         console.log(json.uuid)
-        window.location.href = `./pool.html?uid=${json.uuid}&admin=true`
+        window.location.href = `./pool?uid=${json.uuid}&admin=true`
 
     } catch (error) {
         console.log(error)

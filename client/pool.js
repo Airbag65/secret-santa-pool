@@ -21,6 +21,9 @@ const addMember = async () => {
             email: em.value
         }
     }
+    fn.value = ""
+    ln.value = ""
+    em.value = ""
     try {
         await fetch('http://127.0.0.1:8080/addmember', {
             method: "POST",
@@ -30,6 +33,9 @@ const addMember = async () => {
             body: JSON.stringify(reqObj)
         })
     } catch {}
+    finally {
+        location.reload()
+    }
 } 
 copyToClipboard = () => {
   // Get the text field
