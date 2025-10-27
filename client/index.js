@@ -1,6 +1,6 @@
 const createPool = async () => {
     try {
-        const res = await fetch("http://127.0.0.1:8080/createpool", {
+        const res = await fetch("http://72.60.16.188:8080/createpool", {
             method: 'POST'
         }) 
         if(!res.ok){

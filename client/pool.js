@@ -25,7 +25,7 @@ const addMember = async () => {
     ln.value = ""
     em.value = ""
     try {
-        await fetch('http://127.0.0.1:8080/addmember', {
+        await fetch('http://72.60.16.188:8080/addmember', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ const getPool = async () => {
         admin.innerHTML += `<code>${window.location.href.substring(0, window.location.href.length - 11)} </code><button type='button' onclick='copyToClipboard()'>Save to Clipboard</button>`
         admin.innerHTML += "<br><button type='button' onclick='doLottery()'>Perform Lottery</button>"
     }
-    const res = await fetch(`http://127.0.0.1:8080/get?uid=${params.uid}`)
+    const res = await fetch(`http://72.60.16.188:8080/get?uid=${params.uid}`)
     let pool = await res.json().then(element => {return element})
     pool.members.forEach(element => {
         memberList.innerHTML += `<p>${element.first_name} ${element.last_name} | ${element.email}</p>`
@@ -66,7 +66,7 @@ const getPool = async () => {
 }
 
 const doLottery = async () => {
-    await fetch(`http://127.0.0.1:8080/lottery?uid=${params.uid}`)
+    await fetch(`http://72.60.16.188/lottery?uid=${params.uid}`)
     window.location.href = "./done.html"
 }
 

@@ -134,6 +134,7 @@ func (h *addPersonHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
         return
     }
     if err := SendEmailJoinedPool(newPerson); err != nil {
+	fmt.Println("Could not send email")
         w.WriteHeader(500)
         w.Write([]byte("Internal server error"))
         return
@@ -152,11 +153,17 @@ func SendEmailJoinedPool(p *Person) error {
     to := []string{p.Email}
 
     // Create the message
-    msg := []byte(fmt.Sprintf("To: %s\r\n", p.Email) +
-        fmt.Sprintf("Subject: Hello %s %s\r\n", p.FirstName, p.LastName) +
-        "\r\n" +
-        "You have been added to a secret santa lotto pool!\r\n\r\nThe host of this pool will perform the lottery when everybody is in the pool. "+
-        "You will then be sent another email, telling you who was pulled for you to buy for.\r\n\r\nHappy Holidays!")
+//   msg := []byte(fmt.Sprintf("To: %s\r\n", p.Email) +
+//       fmt.Sprintf("Subject: Hello %s %s\r\n", p.FirstName, p.LastName) +
+//       "\r\n" +
+//       "You have been added to a secret santa lotto pool!\r\n\r\nThe host of this pool will perform the lottery when everybody is in the pool. "+
+//       "You will then be sent another email, telling you who was pulled for you to buy for.\r\n\r\nHappy Holidays!")
+    msg := []byte(fmt.Sprintf("To: %s\r\n", p.Email) + 
+       fmt.Sprintf("Subject: Hej %s %s\r\n", p.FirstName, p.LastName) +
+       "\r\n" +
+       "Du har blivit tillagt i en secret santa pool!\r\n\r\nVärden kommer utföra lottningen när alla är inne i poolen. "+
+       "Du kommer då få ytterligare ett mail som meddelar vem du har blivit tilldelad att köpa en present till.\r\n\r\nGod jul!")
+
     err = smtp.SendMail("smtp.gmail.com:587", auth, "api", to, msg)
     if err != nil {
         log.Fatal(err)
@@ -243,11 +250,17 @@ func SendEmailLottery(lottery map[Person]Person) error {
         to := []string{person.Email}
 
         msg := []byte(fmt.Sprintf("To: %s\r\n", person.Email) +
-        fmt.Sprintf("Subject: The Lottery is done %s %s!!\r\n", person.FirstName, person.LastName) +
+//       fmt.Sprintf("Subject: The Lottery is done %s %s!!\r\n", person.FirstName, person.LastName) +
+//       "\r\n" +
+//       fmt.Sprintf("Hello %s!\r\n\r\n", person.FirstName) +
+//       "The lottery has now been performed! You have drawn... " +
+//       fmt.Sprintf("%s %s!\r\n\r\n", buyTo.FirstName, buyTo.LastName) + "Good luck, and happy holidays!")
+        fmt.Sprintf("Subject: Lottningen är gjord %s %s!!\r\n", person.FirstName, person.LastName) +
         "\r\n" +
-        fmt.Sprintf("Hello %s!\r\n\r\n", person.FirstName) +
-        "The lottery has now been performed! You have drawn... " +
-        fmt.Sprintf("%s %s!\r\n\r\n", buyTo.FirstName, buyTo.LastName) + "Good luck, and happy holidays!")
+        fmt.Sprintf("Hej %s!\r\n\r\n", person.FirstName) +
+        "Lottningen är nu utförd! Du har dragit... " +
+        fmt.Sprintf("%s %s att köpa till!\r\n\r\n", buyTo.FirstName, buyTo.LastName) + "Lycka till, och god jul!")
+
         err = smtp.SendMail("smtp.gmail.com:587", auth, "api", to, msg)
         if err != nil {
             log.Fatal(err)
