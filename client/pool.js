@@ -1,13 +1,19 @@
+const dotenv = require('dotenv').config()
+
 const memberList = document.getElementById('memberList')
 const admin = document.getElementById('admin')
+
 let paramsList = window.location.href.split('?')[1]
 let params = {}
+
 params.admin = 'false'
 paramsList = paramsList.split('&');
 paramsList.forEach(element => {
     let param = element.split('=');
     params[param[0]] = param[1] 
 });
+
+const IP_ADDRESS = process.env.ENV_IP
 
 const addMember = async () => {
     const fn = document.getElementById("first_name")
@@ -25,7 +31,7 @@ const addMember = async () => {
     ln.value = ""
     em.value = ""
     try {
-        await fetch('http://72.60.16.188:8080/addmember', {
+        await fetch(`http://${IP_ADDRESS}:8080/addmember`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -58,7 +64,7 @@ const getPool = async () => {
         admin.innerHTML += `<code>${window.location.href.substring(0, window.location.href.length - 11)} </code><button type='button' onclick='copyToClipboard()'>Save to Clipboard</button>`
         admin.innerHTML += "<br><button type='button' onclick='doLottery()'>Perform Lottery</button>"
     }
-    const res = await fetch(`http://72.60.16.188:8080/get?uid=${params.uid}`)
+    const res = await fetch(`http://${IP_ADDRESS}:8080/get?uid=${params.uid}`)
     let pool = await res.json().then(element => {return element})
     pool.members.forEach(element => {
         memberList.innerHTML += `<p>${element.first_name} ${element.last_name} | ${element.email}</p>`
@@ -66,7 +72,7 @@ const getPool = async () => {
 }
 
 const doLottery = async () => {
-    await fetch(`http://72.60.16.188/lottery?uid=${params.uid}`)
+    await fetch(`http://${IP_ADDRESS}:8080/lottery?uid=${params.uid}`)
     window.location.href = "./done.html"
 }
 

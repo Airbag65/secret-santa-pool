@@ -18,5 +18,6 @@ app.get("/pool", (req, res) => {
 app.get('/pool.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'pool.js'))
 })
+
 app.listen(1337)
 console.log("Started listening on localhost:1337");
