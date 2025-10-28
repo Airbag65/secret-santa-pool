@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from 'react';
+import { postCreateNewPool } from '../apiInterface.ts'
 
 const NewPoolForm = () => {
 
@@ -7,22 +8,19 @@ const NewPoolForm = () => {
     const [ poolLanguage, setPoolLanguage ] = useState("en");
     const [ poolCurrency, setPoolCurrency ] = useState("");
     const [ poolAmount, setPoolAmount ] = useState(0);
+    const [ errorMessage, setErrorMessage ] = useState("")
 
+    const setName = (e) => { setPoolName(e.target.value) }
 
-    const setName = (e) => {
-        setPoolName(e.target.value)
-    }
+    const setLanguage = (e) => { setPoolLanguage(e.target.value) }
 
-    const setLanguage = (e) => {
-        setPoolLanguage(e.target.value)
-    }
+    const setCurrency = (e) => { setPoolCurrency(e.target.value) }
 
-    const setCurrency = (e) => {
-        setPoolCurrency(e.target.value)
-    }
+    const setAmount = (e) => { setPoolAmount(e.target.value) }
 
-    const setAmount = (e) => {
-        setPoolAmount(e.target.value)
+    const createPool = async () => {
+        const couldCreatePool = await postCreateNewPool(poolName, poolLanguage, poolCurrency, poolAmount)
+        if (!couldCreatePool) { setErrorMessage("Something went wrong!") }
     }
 
     return (
@@ -57,10 +55,8 @@ const NewPoolForm = () => {
                     />
                 </label>
             </form>
-            <p>Current name: {poolName}</p>
-            <p>Current language: {poolLanguage}</p>
-            <p>Current currency: {poolCurrency}</p>
-            <p>Current amount: {poolAmount}</p>
+            <button onClick={createPool}>Create Pool</button>
+            <p>{errorMessage}</p>
         </>
     )
 }

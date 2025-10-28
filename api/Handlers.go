@@ -285,7 +285,7 @@ func SendEmailLottery(lottery map[Person]Person, pool *Pool) error {
 
 	for person, buyTo := range lottery {
 		to := []string{person.Email}
-		
+
 		var sub string
 		var lines []string
 		switch pool.Language {
