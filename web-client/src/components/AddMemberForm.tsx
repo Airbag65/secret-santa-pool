@@ -5,7 +5,6 @@ import { postAddMember } from '../apiInterface.ts'
 
 type addMemberFormProps = {
     language: string,
-    admin: boolean,
     uid: string,
 }
 

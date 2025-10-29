@@ -1,7 +1,3 @@
-// import "dotenv/config"
-// dotenv.config({path: '../.env'})
-
-
 interface newPoolReq {
     language: string;
     currency: string;
@@ -41,19 +37,20 @@ const postCreateNewPool: boolean = async (name: string, language: string, curren
     return true
 }
 
-interface person {
+
+interface addMemberReq {
+    uid: string;
+    person: Person;
+}
+
+interface Person {
     email: string;
     first_name: string;
     last_name: string;
 }
 
-interface addMemberReq {
-    uid: string;
-    person: person;
-}
-
 const postAddMember: boolean = async (uid: string, name: string, surname: string, email: string) => {
-    const newMember: person = {
+    const newMember = {
         email: email,
         first_name: name,
         last_name: surname
@@ -75,4 +72,10 @@ const postAddMember: boolean = async (uid: string, name: string, surname: string
     return true
 }
 
-export { postCreateNewPool, postAddMember }
+const getPool: Person[] = async (uid: string) => {
+    const response = await fetch(`http://${IP_ADDRESS}:8080/get?uid=${uid}`)
+    if (!response.ok) { return [] }
+    return await response.json() as Person[]
+}
+
+export { postCreateNewPool, postAddMember, getPool }
