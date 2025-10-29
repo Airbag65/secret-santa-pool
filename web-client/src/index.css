@@ -768,3 +768,7 @@ div.notice p:last-of-type {
     white-space: pre-wrap;
   }
 }
+
+.error {
+    color: red;
+}

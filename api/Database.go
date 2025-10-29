@@ -14,7 +14,7 @@ type Database struct {
 type Pool struct {
 	Uid      string   `json:"uid"`
 	Language string   `json:"language"`
-	PoolName string   `json"pool_name"`
+	PoolName string   `json:"pool_name"`
 	Currency string   `json:"currency"`
 	Amount   int      `json:"amount"`
 	Members  []Person `json:"members"`

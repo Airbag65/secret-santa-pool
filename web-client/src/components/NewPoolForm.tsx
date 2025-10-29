@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from 'react';
-import { postCreateNewPool } from '../apiInterface.ts'
+import { postCreateNewPool, postAddMember } from '../apiInterface.ts'
 
 const NewPoolForm = () => {
 
@@ -56,7 +56,7 @@ const NewPoolForm = () => {
                 </label>
             </form>
             <button onClick={createPool}>Create Pool</button>
-            <p>{errorMessage}</p>
+            <p className="error">{errorMessage}</p>
         </>
     )
 }

@@ -9,8 +9,9 @@ interface newPoolReq {
     amount: number;
 }
 
+const IP_ADDRESS = import.meta.env.VITE_ENV_IP
+
 const postCreateNewPool: boolean = async (name: string, language: string, currency: string, amount: number) => {
-    const IP_ADDRESS = import.meta.env.VITE_ENV_IP
 
     const requestBody: newPoolReq = {
         language: language,
@@ -40,4 +41,38 @@ const postCreateNewPool: boolean = async (name: string, language: string, curren
     return true
 }
 
-export { postCreateNewPool }
+interface person {
+    email: string;
+    first_name: string;
+    last_name: string;
+}
+
+interface addMemberReq {
+    uid: string;
+    person: person;
+}
+
+const postAddMember: boolean = async (uid: string, name: string, surname: string, email: string) => {
+    const newMember: person = {
+        email: email,
+        first_name: name,
+        last_name: surname
+    }
+
+    const requestBody: addMemberReq = {
+        uid: uid,
+        person: newMember
+    }
+
+    const response = await fetch(`http://${IP_ADDRESS}:8080/addmember`,
+        {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(requestBody)
+        })
+    if (!response.ok) { return false }
+    
+    return true
+}
+
+export { postCreateNewPool, postAddMember }
